@@ -9,6 +9,7 @@ import { LandingPageComponent } from './components/landing-page/landing-page.com
 import { HomeComponent } from './components/home/home.component';
 import { RouterModule } from '@angular/router';
 import { ConfigService } from './config.service';
+import { MovieListComponent } from './components/movie-list/movie-list.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { ConfigService } from './config.service';
     FooterComponent,
     HeaderComponent,
     LandingPageComponent,
-    HomeComponent
+    HomeComponent,
+    MovieListComponent
   ],
   imports: [
     BrowserModule,
