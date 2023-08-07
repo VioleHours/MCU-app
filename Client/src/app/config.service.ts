@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { Countdown } from './countdown';
 
 @Injectable({
@@ -9,7 +9,7 @@ import { Countdown } from './countdown';
 })
 export class ConfigService {
 
-  private apiCountdownUrl = 'https://www.whenisthenextmcufilm.com/';
+  private apiCountdownUrl = 'https://www.whenisthenextmcufilm.com/api';
   private publicKey = 'process.env.PUBLIC_KEY';
   private privateKey = 'process.env.PRIVATE_KEY';
   private apiComicUrl = 'developer.marvel.com';
@@ -18,12 +18,16 @@ export class ConfigService {
 
   getNextMovie(): Observable<Countdown[]> {
     return this.http
-      .get<Countdown[]>(this.apiCountdownUrl)
-      .pipe(catchError(this.handleError));
+      .get<any>(this.apiCountdownUrl)
+      .pipe(
+        map((response: any) => response.countdowns),
+        catchError(this.handleError)
+      );
   }
 
   private handleError(error: any) {
-    return throwError(error);
+    console.error('Error during API request:', error);
+    return throwError('An error occurred during the API request. Please try again later.');
   }
 }
 
